@@ -41,6 +41,31 @@ public final class LinkedListChallenges {
         System.out.println("Eventos: " + eventos + " size: " + eventos.size());
         
         System.out.println();
+        
+     // --- PRUEBA RETO 3: Invertir Lista ---
+        System.out.println("\nReto 3 - Invertir lista (in-place)");
+        SinglyLinkedList<Integer> numeros = new SinglyLinkedList<>();
+        numeros.addLast(2);
+        numeros.addLast(4);
+        numeros.addLast(5);
+        numeros.addLast(6);
+        System.out.println("Antes: " + numeros.toString());
+        numeros.reverseInPlace();
+        System.out.println("Despues: " + numeros.toString());
+
+        // --- PRUEBA RETO 4: Eliminar Duplicados ---
+        System.out.println("\nReto 4 - Eliminar duplicados");
+        SinglyLinkedList<String> letras = new SinglyLinkedList<>();
+        letras.addLast("A");
+        letras.addLast("B");
+        letras.addLast("A");
+        letras.addLast("C");
+        letras.addLast("B");
+        letras.addLast("D");
+        System.out.println("Antes: " + letras.toString());
+        int borrados = letras.removeDuplicates();
+        System.out.println("Despues: " + letras.toString());
+        System.out.println("Nodos duplicados eliminados: " + borrados);
     }
 
 }
