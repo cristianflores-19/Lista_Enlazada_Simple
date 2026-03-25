@@ -140,7 +140,21 @@ public class SinglyLinkedList<T> {
     
     
     public int clean() {
+    	int nodosEliminados = 0;
+        SimpleNode<T> current = head;
         
+        while (current != null) {
+            SimpleNode<T> next = current.getNext(); 
+            current.setNext(null);                  
+            current = next;                         
+            nodosEliminados++;                      
+        }
+        
+        this.head = null;
+        this.tail = null;
+        this.size = 0;
+        
+        return nodosEliminados;
     	
     }
 
