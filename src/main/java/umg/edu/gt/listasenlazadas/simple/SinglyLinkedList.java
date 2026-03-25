@@ -181,8 +181,22 @@ public class SinglyLinkedList<T> {
      * - Lista con varios elementos.
      */
     public void reverseInPlace() {
-        throw new UnsupportedOperationException(
-                "TODO RETO: Implementar reverseInPlace() en SinglyLinkedList.");
+    	if (head == null || head.getNext() == null) return; 
+
+        SimpleNode<T> prev = null;
+        SimpleNode<T> current = head;
+        SimpleNode<T> next = null;
+        
+        tail = head; // El que era el primero ahora será el último
+
+        while (current != null) {
+            next = current.getNext(); 
+            current.setNext(prev);    
+            prev = current;           
+            current = next;           
+        }
+        
+        head = prev;
     }
 
     /**
