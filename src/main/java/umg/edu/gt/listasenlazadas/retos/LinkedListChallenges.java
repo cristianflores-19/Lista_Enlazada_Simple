@@ -16,6 +16,9 @@ public final class LinkedListChallenges {
     public static void run() {
         System.out.println("=== RETOS DE IMPLEMENTACION ===");
         challenge1CountOccurrences();
+        challenge2Clean();
+        challenge3ReverseInPlace();
+        challenge4RemoveDuplicates();
         System.out.println();
     }
 
@@ -29,43 +32,77 @@ public final class LinkedListChallenges {
 
         System.out.println("Reto 1 - Analitica de eventos (lista simple)");
         System.out.println("Eventos: " + eventos);
-        try {
-            int totalLogins = eventos.countOccurrences("LOGIN");
-            System.out.println("Resultado esperado para LOGIN: 3");
-            System.out.println("Resultado obtenido: " + totalLogins);
-        } catch (UnsupportedOperationException ex) {
-            System.out.println(ex.getMessage());
-        }
-        
-        eventos.clean();
-        System.out.println("Eventos: " + eventos + " size: " + eventos.size());
-        
+        int totalLogins = eventos.countOccurrences("LOGIN");
+        printCheck("countOccurrences(LOGIN)", 3, totalLogins);
         System.out.println();
-        
-     // --- PRUEBA RETO 3: Invertir Lista ---
-        System.out.println("\nReto 3 - Invertir lista (in-place)");
-        SinglyLinkedList<Integer> numeros = new SinglyLinkedList<>();
-        numeros.addLast(2);
-        numeros.addLast(4);
-        numeros.addLast(5);
-        numeros.addLast(6);
-        System.out.println("Antes: " + numeros.toString());
-        numeros.reverseInPlace();
-        System.out.println("Despues: " + numeros.toString());
-
-        // --- PRUEBA RETO 4: Eliminar Duplicados ---
-        System.out.println("\nReto 4 - Eliminar duplicados");
-        SinglyLinkedList<String> letras = new SinglyLinkedList<>();
-        letras.addLast("A");
-        letras.addLast("B");
-        letras.addLast("A");
-        letras.addLast("C");
-        letras.addLast("B");
-        letras.addLast("D");
-        System.out.println("Antes: " + letras.toString());
-        int borrados = letras.removeDuplicates();
-        System.out.println("Despues: " + letras.toString());
-        System.out.println("Nodos duplicados eliminados: " + borrados);
     }
 
+    private static void challenge2Clean() {
+        SinglyLinkedList<Integer> numeros = new SinglyLinkedList<>();
+        numeros.addLast(10);
+        numeros.addLast(20);
+        numeros.addLast(30);
+        numeros.addLast(40);
+
+        System.out.println("Reto 2 - Limpieza total de lista");
+        System.out.println("Antes de clean: " + numeros + " size=" + numeros.size());
+
+        int eliminados = numeros.clean();
+
+        printCheck("clean() nodos eliminados", 4, eliminados);
+        printCheck("size despues de clean", 0, numeros.size());
+        printCheck("isEmpty despues de clean", true, numeros.isEmpty());
+        printCheck("toString despues de clean", "[]", numeros.toString());
+        System.out.println();
+    }
+
+    private static void challenge3ReverseInPlace() {
+        SinglyLinkedList<Integer> lista = new SinglyLinkedList<>();
+        lista.addLast(2);
+        lista.addLast(4);
+        lista.addLast(5);
+        lista.addLast(6);
+
+        System.out.println("Reto 3 - Inversion in-place");
+        System.out.println("Antes: " + lista);
+        lista.reverseInPlace();
+        System.out.println("Despues: " + lista);
+
+        printCheck("reverseInPlace contenido", "[6, 5, 4, 2]", lista.toString());
+        printCheck("size se mantiene", 4, lista.size());
+        System.out.println();
+    }
+
+    private static void challenge4RemoveDuplicates() {
+        SinglyLinkedList<String> codigos = new SinglyLinkedList<>();
+        codigos.addLast("A");
+        codigos.addLast("B");
+        codigos.addLast("A");
+        codigos.addLast("C");
+        codigos.addLast("B");
+        codigos.addLast("D");
+        codigos.addLast("D");
+
+        System.out.println("Reto 4 - Eliminacion de duplicados");
+        System.out.println("Antes: " + codigos);
+
+        int eliminados = codigos.removeDuplicates();
+
+        System.out.println("Despues: " + codigos);
+        printCheck("removeDuplicates eliminados", 3, eliminados);
+        printCheck("contenido sin duplicados", "[A, B, C, D]", codigos.toString());
+        printCheck("size final", 4, codigos.size());
+        System.out.println();
+    }
+
+    private static void printCheck(String testName, Object expected, Object actual) {
+        boolean ok = isSame(expected, actual);
+        String status = ok ? "OK" : "FALLO";
+        System.out.println("  [" + status + "] " + testName
+                + " -> esperado=" + expected + ", obtenido=" + actual);
+    }
+
+    private static boolean isSame(Object left, Object right) {
+        return left == right || (left != null && left.equals(right));
+    }
 }

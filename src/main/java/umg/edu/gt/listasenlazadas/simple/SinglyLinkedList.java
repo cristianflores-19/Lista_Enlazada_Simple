@@ -136,26 +136,21 @@ public class SinglyLinkedList<T> {
      *
      * @return cantidad de nodos eliminados
      */
-    
-    
-    
     public int clean() {
-    	int nodosEliminados = 0;
+        int removed = 0;
         SimpleNode<T> current = head;
-        
+
         while (current != null) {
-            SimpleNode<T> next = current.getNext(); 
-            current.setNext(null);                  
-            current = next;                         
-            nodosEliminados++;                      
+            SimpleNode<T> next = current.getNext();
+            current.setNext(null);
+            current = next;
+            removed++;
         }
-        
-        this.head = null;
-        this.tail = null;
-        this.size = 0;
-        
-        return nodosEliminados;
-    	
+
+        head = null;
+        tail = null;
+        size = 0;
+        return removed;
     }
 
     /**
@@ -181,22 +176,22 @@ public class SinglyLinkedList<T> {
      * - Lista con varios elementos.
      */
     public void reverseInPlace() {
-    	if (head == null || head.getNext() == null) return; 
+        if (head == null || head.getNext() == null) {
+            return;
+        }
 
-        SimpleNode<T> prev = null;
+        SimpleNode<T> previous = null;
         SimpleNode<T> current = head;
-        SimpleNode<T> next = null;
-        
-        tail = head; // El que era el primero ahora será el último
+        tail = head;
 
         while (current != null) {
-            next = current.getNext(); 
-            current.setNext(prev);    
-            prev = current;           
-            current = next;           
+            SimpleNode<T> next = current.getNext();
+            current.setNext(previous);
+            previous = current;
+            current = next;
         }
-        
-        head = prev;
+
+        head = previous;
     }
 
     /**
@@ -219,32 +214,32 @@ public class SinglyLinkedList<T> {
      * @return cantidad de nodos eliminados por duplicados
      */
     public int removeDuplicates() {
-if (head == null) return 0;
-        
-        int duplicadosEliminados = 0;
+        int removed = 0;
         SimpleNode<T> current = head;
 
         while (current != null) {
-            SimpleNode<T> runner = current;
-            
-            while (runner.getNext() != null) {
-                if (current.getValue().equals(runner.getNext().getValue())) {
-                    
-                    runner.setNext(runner.getNext().getNext()); 
-                    size--; 
-                    duplicadosEliminados++; 
-                    
-                    if (runner.getNext() == null) {
-                        tail = runner;
+            SimpleNode<T> runnerPrevious = current;
+            SimpleNode<T> runner = current.getNext();
+
+            while (runner != null) {
+                if (isSameValue(current.getValue(), runner.getValue())) {
+                    runnerPrevious.setNext(runner.getNext());
+                    if (runner == tail) {
+                        tail = runnerPrevious;
                     }
+                    size--;
+                    removed++;
+                    runner = runnerPrevious.getNext();
                 } else {
-                    runner = runner.getNext(); 
+                    runnerPrevious = runner;
+                    runner = runner.getNext();
                 }
             }
-            current = current.getNext(); 
+
+            current = current.getNext();
         }
-        
-        return duplicadosEliminados;
+
+        return removed;
     }
 
     @Override
